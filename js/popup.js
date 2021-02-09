@@ -241,14 +241,31 @@ function restoreOptions() {
 		if(!localStorage.default_pattern){ // only show button if default text is set
 			getId('default-value-button').classList.toggle('hideButton')
 		}
-		if(localStorage['pmpattern'] && localStorage['pmpattern'] == 'B') {
-			show(getId('pagemr02'))
-			hide(getId('pagemr01'))
-			getId('pmpattern').value = 'B'
-		} else {
-			hide(getId('pagemr02'))
-			show(getId('pagemr01'))
-			getId('pmpattern').value = 'A'
+		const pmpattern = localStorage['pmpattern'];
+		if(pmpattern) {
+			if(pmpattern == 'A') {
+				show(getId('pagemr01'));
+				hide(getId('pagemr02'));
+				hide(getId('pagemr03'));
+				show(getId('contentid'));
+				getId('pmpattern').value = 'A';
+				getId('pmchange').value = 'false';
+			} else if(pmpattern == 'B') {
+				hide(getId('pagemr01'));
+				show(getId('pagemr02'));
+				hide(getId('pagemr03'));
+				show(getId('contentid'));
+				getId('pmpattern').value = 'B';
+				getId('pmchange').value = 'false';
+			} else {
+				hide(getId('contentid'));
+				hide(getId('pagemr01'));
+				hide(getId('pagemr02'));
+				show(getId('pagemr03'));
+				hide(getId('contentid'));
+				getId('pmpattern').value = 'CHG';
+				getId('pmchange').value = 'true';
+			}
 		}
 	}
 	if(localStorage['pdcheck'] && localStorage['pdcheck'] == 'true'){
