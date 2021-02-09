@@ -83,6 +83,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
 function real_start(tabId, actionUrl) {
 	stopBadgeTimer(tabId);
 	tabs[tabId]['status'] = 'start';
+	tabs[tabId]['previous_content'] = '';
+
 	chrome.tabs.onUpdated.addListener(onUpdateListener);
 	reload_it(tabId, actionUrl);
 }
@@ -390,15 +392,14 @@ function pause_sound_with_fadeout(sound) {
 }
 
 function reload_it(tabId, tab_url) {
-
-	if(tabs[tabId]['checkme']) {
-		var check_content = tabs[tabId]['checkme'];
-		var pmpattern = tabs[tabId]['pmpattern'];
-
+	var check_content = tabs[tabId]['checkme'];
+	var pmpattern = tabs[tabId]['pmpattern'];
+	var previous_content = tabs[tabId]['previous_content'];
+	if(check_content || pmpattern) {
 		if(tabs[tabId]['count'] == 0) {
 			updateTab(tabId, tab_url);
 		} else {
-			chrome.tabs.sendMessage(tabId, {checkme: check_content, pattern: pmpattern}, function(response) {
+			chrome.tabs.sendMessage(tabId, {checkme: check_content, pattern: pmpattern, prevContent: previous_content}, function(response) {
 			if (response.findresult == "yes") {
 				reload_cancel(tabId, 'yes');
 				// notification & tab handling

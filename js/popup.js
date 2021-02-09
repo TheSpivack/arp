@@ -110,10 +110,11 @@ function startRefresh() {
 	var myInterval = get_interval();
 	var views = chrome.extension.getViews();
 	var checkme = getId("contentid").value;
+	var pmchange = getId("pmchange").value == "true";
 	var preurl = getId("pdurlinp").value;
 
     for (var i in views) {
-			if(checkme) {
+			if(checkme || pmchange) {
 				var page_monitor_pattern = getId("pmpattern").value;
 				if (views[i].loop_start) {
 					views[i].loop_start(-1, myInterval[0], myInterval[1], checkme, page_monitor_pattern, preurl);
@@ -140,6 +141,7 @@ function startTimer() {
   if (getId("timerbtn").value == "Start Timer" ) {
 	var myInterval = get_interval();
 	var checkme = getId("contentid").value;
+	var pmchange = getId("pmchange").value == "true";
 	var preurl = getId("pdurlinp").value;
 
   	var timer_mode = getId("timermode").value;
@@ -159,7 +161,7 @@ function startTimer() {
 		} else {
 			var views = chrome.extension.getViews();
 			for (var i in views) {
-				if(checkme) {
+				if(checkme || pmchange) {
 					var page_monitor_pattern = getId("pmpattern").value;
 					if (views[i].loop_start) {
 						views[i].loop_start(waitTime, myInterval[0], myInterval[1], checkme, page_monitor_pattern, preurl);

@@ -46,7 +46,15 @@ chrome.extension.onMessage.addListener(
 	} else if(request.pattern == 'D') {
 		writeCookie('arp_scroll_switch', '0', -1);
 		writeCookie('arp_scroll_position', 0, -1);
+	} else if (request.pattern == 'CHG') {
+		//previous content is blank, first time we're in here
+		if(request.prevContent == '' || request.prevContent == document.body.innerHTML) {
+			sendResponse({findresult: "set-content", newContent: document.body.innerHTML});
+		} else {
+			sendResponse({findresult: "yes"});
+		}
 	}
+
 });
 var do_jump = readCookie('arp_scroll_switch');
 if(do_jump && do_jump == '1') {
