@@ -34,8 +34,10 @@ function save_options(){
 
 	if(getId('pagemr01').checked) {
 		localStorage['pmpattern'] = 'A';
-	} else {
+	} else if(getId('pagemr02').checked) {
 		localStorage['pmpattern'] = 'B';
+	} else {
+		localStorage['pmpattern'] = 'CHG';
 	}
 
 	if(getId('pmsound01').checked) {
@@ -91,11 +93,17 @@ function read_options(){
 	} else {
 		getId('timer01').checked = true;
 	}
-	if(localStorage['pmpattern'] && localStorage['pmpattern'] == 'B') {
-		getId('pagemr02').checked = true;
-	} else {
-		getId('pagemr01').checked = true;
-	}
+
+	const pmpattern = localStorage['pmpattern'];
+	if(pmpattern){
+		if(pmpattern == 'A') {
+			getId('pagemr01').checked = true;
+		} else if(pmpattern == 'B') {
+			getId('pagemr02').checked = true;
+		} else {
+			getId('pagemr03').checked = true;
+		}
+	} 
 
 	if(localStorage.default_pattern){
 		// set deafult pattern 
