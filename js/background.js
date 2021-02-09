@@ -326,8 +326,8 @@ function show_notification(pmpattern, check_content, onclick) {
 	var period = time[1] < 12 ? 'a.m.' : 'p.m.'; // The period of the day.
 	var options = {
 	  type: "basic", // hour + ':' + time[2] + ' ' + period,
-	  title: action + " the target text! - ARP",
-	  message: "\"" + check_content  + "\"",
+	  title: (pmpattern == 'CHG') ? 'The page source has changed! - ARP' : action + " the target text! - ARP",
+	  message: (pmpattern == 'CHG') ? '' : "\"" + check_content  + "\"",
 	  iconUrl: "Icon/icon-80.png",
 	  contextMessage: "Click on this box to see the tab.",
 	  buttons: [{title: "Show tab"}, {title: "Dismiss"}],
